@@ -1,8 +1,10 @@
 // TODO: Connect app to database (MongoDB?)
 // TODO: #5 Undo complete
 // TODO: #6 If modified, then change meta to modified date: Modified 23-01-2021 23:00
-// TODO: #7 Add optional task desription, and change current todo.text to taskTitle
 // TODO: #10 Completed task should move to the end of the to do list. animated move?
+// TODO: #12 Sort todo list by alphabetical order or by created order
+// TODO: #13 On delete show confirm delete popup. Not default JavaScript popup. Design should match project.
+// TODO: Clear fields after submit
 
 import React from 'react';
 import './App.css';
@@ -20,7 +22,10 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
         <div className="todo-meta">
           created: {todo.currentDateFormated}
         </div>
+        <div className="todo-description">
+          {todo.description}
         </div>
+      </div>
       <div>
         <button onClick={() => completeTodo(index)}><img className="todo-icon" alt="Checkmark icon" src="complete-todo-icon.svg" /></button>
         <button onClick={() => removeTodo(index)}><img className="todo-icon" alt="Delete icon" src="delete-todo-icon.svg" /></button>
@@ -29,51 +34,79 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
   );
 };
 
-// Handles update, submit and empty field issue
-function TodoForm({ addTodo }) {
-  const [value, setValue] = React.useState("");
+const initialValues = {
+  title: "",
+  description: "",
+};
 
-  const handleSubmit = e => {
-    
+// Handles update, submit and empty field issue
+function TodoForm({ addTodo }) {  
+  const [values, setValues] = React.useState(initialValues);
+
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = e => {    
     // Important! - preventDefault() cancels the native behavior of the Submit button.
     e.preventDefault();
 
-    // If no value return
-    if(!value) return;
+    // Title value has to be entered
+    if(!values.title) return;
+    
+    addTodo(values.title, values.description);   
 
-    addTodo(value);
-    setValue("");
-  };
+    document.getElementById("title-input").value = "asdasdasdds";
+  }
 
   // On input submit call
   return (    
-    <form className="title-form" onSubmit={handleSubmit}>
-      <input
+    <form className="create-task-form" id="task-form" onSubmit={handleFormSubmit}>
+      <input        
         placeholder="Enter task title" 
         type="text"
+        id="title-input"
         className="input"
-        value={value}
-        onChange={e => setValue(e.target.value)}
+        value={values.title}
+        name="title"
+        label="Title"
+        onChange={handleInputChange}
       />
+      <textarea        
+        placeholder="Enter description (optional)"
+        type="text"
+        className="input description-form"
+        value={values.description}
+        name="description"
+        label="Description"
+        onChange={handleInputChange}
+      />
+      <button type="submit">Submit</button>      
     </form>
   );
 }
 
-function App() {
-  
+function App() {  
   // Todo object list with test data
   const [todos, setTodos] = React.useState([   
     { text: "First task", 
+      description: "Laboris aute proident nisi quis ipsum laborum voluptate sunt esse in laborum deserunt sint do.",
       isCompleted: false,
       currentDateFormated: "21-01-2021 21:00"
     },
     {
       text: "Second task",
+      description: "Est in sit aliqua fugiat dolor laborum laboris. Deserunt aliqua proident excepteur id minim fugiat.",
       isCompleted: false,
       currentDateFormated: "22-01-2021 22:00"
     },
     { 
       text: "Third task",
+      description: "Lorem id amet veniam sint. Labore eu irure consequat cupidatat tempor voluptate veniam.",
       isCompleted: false,
       currentDateFormated: "23-01-2021 23:00"
     },
@@ -88,14 +121,13 @@ function App() {
   const month = ('0' + parseInt(today.getMonth() + 1)).slice(-2);
   const year = today.getFullYear();
   const hours = ('0' + parseInt(today.getHours() + 1)).slice(-2);
-  const minutes = today.getMinutes();
-   
+  const minutes = ('0' + parseInt(today.getMinutes() + 1)).slice(-2);   
   const currentDateFormated = date + "-" + month + "-" + year + " " + hours + ":" + minutes;
 
   // Adds a new todo
-  const addTodo = text => {
+  const addTodo = (title, description) => {
     // Spread operator copies the existing list
-    const newTodos = [...todos, { text, currentDateFormated }];
+    const newTodos = [...todos, { text: title, description, currentDateFormated }];
     setTodos(newTodos)
   };
   
@@ -117,11 +149,14 @@ function App() {
 
   // Mapping over the todo items and display them by index
   return (
-    <div className="app">
+    <div className="app">      
       <h1>To Do List</h1>
       <em>React Hook Version</em>
-      <h3>Create task</h3>
-      <TodoForm addTodo={addTodo} />
+        <h3>Create Task</h3>
+      <div className="todo-list-form">
+        <TodoForm addTodo={addTodo} />
+      </div>
+      <h3>Tasks</h3>
       <div className="todo-list">        
         {todos.map((todo, index) => (
           <Todo

@@ -6,7 +6,7 @@
   background: #353535;
   font-family: 'Roboto', sans-serif;
   color: #FFFFFF; 
-  height: 100vh;
+  height: 100vh;  
   padding: 30px;   
 }
 
@@ -16,7 +16,7 @@ h1 {
 
 .todo-list {    
   border-radius: 4px;
-  max-width: 500px;  
+  max-width: 500px;    
 }
 
 .todo {  
@@ -26,10 +26,9 @@ h1 {
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
   display: flex;  
   justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 3px 10px;
-  text-transform: capitalize;
-  height: 50px;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-transform: capitalize;  
   line-height: 20px;
 }
 
@@ -61,15 +60,26 @@ button:hover {
 }
 
 @keyframes background-color {
-  100% {
-    /* filter: invert(0%) sepia(96%) saturate(16%) hue-rotate(292deg) brightness(95%) contrast(104%); */
+  100% {    
     opacity: 100%;        
   }
 }
 
 .todo-title {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;  
+}
+
+.todo-description {
+  padding-top: 10px;
+  text-align: justify;
+}
+
+.todo-meta {  
+  padding-top: 10px;
+  font-style: italic;  
+  font-size: 14px;
+  opacity: 85%;
 }
 
 .todo-icon {  
@@ -78,21 +88,22 @@ button:hover {
   height: 20px;
 }
 
-.todo-meta {  
-  font-style: italic;  
-  font-size: 14px;
-}
-
-.title-form {  
-  padding-bottom: 20px;
-
-}
-
-.title-form .input {
+.input {
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   width: 485px;
   height: 30px;
   font-size: 16px;
-  padding-left: 10px;
+  padding-left: 10px;  
+  margin-bottom: 10px;
+}
+
+.description-form {
+  width: 485px;  
+  height: 70px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.todo-list-form {  
+  /* TODO: Add CSS to make inputfields on top of eachother */
 }
