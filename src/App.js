@@ -1,5 +1,4 @@
 // TODO: Connect app to database (MongoDB?)
-// TODO: #8 Completed tasks background should be greyed out
 // TODO: #5 Undo complete
 // TODO: #6 If modified, then change meta to modified date: Modified 23-01-2021 23:00
 // TODO: #7 Add optional task desription, and change current todo.text to taskTitle
@@ -12,10 +11,9 @@ import './App.css';
 function Todo({ todo, index, completeTodo, removeTodo }) {
   return (
     <div 
-      className="todo"
-      style={{ textDecoration: todo.isCompleted ? "line-through" : ""}}
+      className={todo.isCompleted ? "todo todo-completed" : "todo"}
     >
-      <div className="title-meta-container">
+      <div className={todo.isCompleted ? "title-meta-container-completed" : ""}>
         <div className="todo-title">
           {todo.text}
         </div>
@@ -51,7 +49,7 @@ function TodoForm({ addTodo }) {
   return (    
     <form className="title-form" onSubmit={handleSubmit}>
       <input
-        placeholder="Enter Task title" 
+        placeholder="Enter task title" 
         type="text"
         className="input"
         value={value}
