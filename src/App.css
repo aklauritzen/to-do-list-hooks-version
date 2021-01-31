@@ -1,25 +1,87 @@
+/* TODO: #9 Normalize CSS*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .app {
-  background: #209cee;
+  background: #353535;
+  font-family: 'Roboto', sans-serif;
+  color: #FFFFFF; 
   height: 100vh;
-  padding: 30px;  
+  padding: 30px;   
 }
 
-.todo-list {  
-  background: #e8e8e8;
+h1 {
+  line-height: 10px;
+}
+
+.todo-list {    
   border-radius: 4px;
-  max-width: 400px;
-  padding: 5px;  
+  max-width: 500px;  
 }
 
 .todo {  
-  align-items: center;
-  background: #fff;
-  border-radius: 3px;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-  display: flex;
-  font-size: 12px;
+  align-items: center;    
+  background: #3C6E71;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  display: flex;  
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   padding: 3px 10px;
   text-transform: capitalize;
+  height: 50px;
+  line-height: 20px;
+}
+
+button {
+  background-color: rgba(255, 0, 0, 0);
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+  border: 0;
+  cursor: pointer;  
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:hover {
+  animation-name: background-color;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes background-color {
+  100% {
+    filter: invert(0%) sepia(96%) saturate(16%) hue-rotate(292deg) brightness(95%) contrast(104%);        
+  }
+}
+
+.todo-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.todo-icon {  
+  position: relative;
+  top: 1px;
+  height: 20px;
+}
+
+.todo-meta {  
+  font-style: italic;  
+  font-size: 14px;
+}
+
+.title-form {  
+  padding-bottom: 20px;
+
+}
+
+.title-form .input {
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  width: 485px;
+  height: 30px;
+  font-size: 16px;
+  padding-left: 10px;
 }
