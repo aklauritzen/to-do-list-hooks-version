@@ -1,5 +1,5 @@
 // TODO: Connect app to database (MongoDB?)
-// TODO: Add time and date created to Todo items
+// TODO: Undo complete
 
 import React from 'react';
 import './App.css';
@@ -11,7 +11,7 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
       className="todo"
       style={{ textDecoration: todo.isCompleted ? "line-through" : ""}}
     >
-      {todo.text}
+      {todo.text} - created: {todo.currentDateFormated}
       <div>
         <button onClick={() => completeTodo(index)}>Complete</button>
         <button onClick={() => removeTodo(index)}>x</button>
@@ -21,7 +21,7 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
 };
 
 // Handles update, submit and empty field issue
-function TodoForm({ addTodo}) {
+function TodoForm({ addTodo }) {
   const [value, setValue] = React.useState("");
 
   const handleSubmit = e => {
@@ -52,33 +52,43 @@ function TodoForm({ addTodo}) {
 function App() {
   
   // Todo object list
-  const [todos, setTodos] = React.useState([
+  const [todos, setTodos] = React.useState([   
     { text: "First task", 
-      isCompleted: false
+      isCompleted: false,
+      currentDateFormated: "21-01-2021 21:00"
     },
     {
       text: "Second task",
-      isCompleted: false
+      isCompleted: false,
+      currentDateFormated: "22-01-2021 22:00"
     },
     { 
       text: "Third task",
-      isCompleted: false
+      isCompleted: false,
+      currentDateFormated: "23-01-2021 23:00"
     },
   ]);
+
+  // Used if list should start empty
+  // const [todos, setTodos] = React.useState([]);
+
+  // Current date and time for Todo
+  const currentDate = new Date();
+  const currentDateFormated = currentDate.getDate() + "-" + currentDate.getMonth() + 1 + "-" + currentDate.getFullYear() + " " + currentDate.getHours() + ":" + currentDate.getMinutes();
 
   // Adds a new todo
   const addTodo = text => {
     // Spread operator copies the existing list
-    const newTodos = [...todos, { text }];
+    const newTodos = [...todos, { text, currentDateFormated }];
     setTodos(newTodos)
   };
   
-  const completeTodo = index => {
+  const completeTodo = index => {    
     const newTodos = [...todos];
     newTodos[index].isCompleted = true;
     setTodos(newTodos);
   };
-
+  
   const removeTodo = index => {
     const newTodos = [...todos];
 
@@ -109,4 +119,5 @@ function App() {
   );
 }
 
+// Expose App for other modules (index.js)
 export default App;
