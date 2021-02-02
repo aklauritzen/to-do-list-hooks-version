@@ -4,7 +4,6 @@
 // TODO: #10 Completed task should move to the end of the to do list. animated move?
 // TODO: #12 Sort todo list by alphabetical order or by created order
 // TODO: #13 On delete show confirm delete popup. Not default JavaScript popup. Design should match project.
-// TODO: #15 Clear fields after submit
 
 import React from 'react';
 import './App.css';
@@ -19,7 +18,8 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
             {todo.text}
           </div>
           <div className="iconButtonContainer">
-            <button className="iconButton" onClick={() => completeTodo(index)}><img className="todoIcon" alt="Check mark icon" src="complete-todo-icon.svg" /></button>
+            {/* <button className="iconButton" onClick={() => completeTodo(index)}><img className="todoIcon" alt="Check mark icon" src="complete-todo-icon.svg" /></button> */}
+            <button className="iconButton" onClick={() => completeTodo(index)}><img className="todoIcon" alt="Check mark icon" src={todo.isCompleted ? "undo-todo-icon.svg" : "complete-todo-icon.svg"} /></button>
             <button className="iconButton" onClick={() => removeTodo(index)}><img className="todoIcon" alt="Delete icon" src="delete-todo-icon.svg" /></button>
           </div>
         </div>      
@@ -135,7 +135,10 @@ function App() {
   
   const completeTodo = index => {    
     const newTodos = [...todos];
-    newTodos[index].isCompleted = true;
+    
+    // Complete flip
+    newTodos[index].isCompleted = newTodos[index].isCompleted ? false : true;
+
     setTodos(newTodos);
   };
   
