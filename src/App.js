@@ -1,5 +1,4 @@
 // TODO: #16 Connect app to database (MongoDB?)
-// TODO: #5 Undo complete
 // TODO: #6 If modified, then change meta to modified date: Modified 23-01-2021 23:00
 // TODO: #10 Completed task should move to the end of the to do list. animated move?
 // TODO: #12 Sort todo list by alphabetical order or by created order
@@ -17,10 +16,9 @@ function Todo({ todo, index, completeTodo, removeTodo }) {
           <div className="todoTitle">
             {todo.text}
           </div>
-          <div className="iconButtonContainer">
-            {/* <button className="iconButton" onClick={() => completeTodo(index)}><img className="todoIcon" alt="Check mark icon" src="complete-todo-icon.svg" /></button> */}
-            <button className="iconButton" onClick={() => completeTodo(index)}><img className="todoIcon" alt="Check mark icon" src={todo.isCompleted ? "undo-todo-icon.svg" : "complete-todo-icon.svg"} /></button>
-            <button className="iconButton" onClick={() => removeTodo(index)}><img className="todoIcon" alt="Delete icon" src="delete-todo-icon.svg" /></button>
+          <div className="iconButtonContainer">            
+            <button className="iconButton taskIconButton" onClick={() => completeTodo(index)}><img className="todoIcon" alt="Check mark icon" src={todo.isCompleted ? "undo-todo-icon.svg" : "complete-todo-icon.svg"} /></button>
+            <button className="iconButton taskIconButton" onClick={() => removeTodo(index)}><img className="todoIcon" alt="Delete icon" src="delete-todo-icon.svg" /></button>
           </div>
         </div>      
         <div className="todoMeta">
@@ -38,6 +36,8 @@ const initialValues = {
   title: "",
   description: "",
 };
+
+let todoListSortDirectionDescending = true;
 
 // Handles update, submit and empty field issue
 function TodoForm({ addTodo }) {  
@@ -109,9 +109,21 @@ function App() {
     { 
       text: "Third task",
       description: "Lorem id amet veniam sint. Labore eu irure consequat cupidatat tempor voluptate veniam.",
-      isCompleted: true,
+      isCompleted: false,
       currentDateFormated: "23-01-2021 23:00"
     },
+    { 
+      text: "Fourth task",
+      description: "Est minim mollit excepteur veniam quis Lorem consectetur ad aliquip labore consectetur Lorem.",
+      isCompleted: false,
+      currentDateFormated: "23-01-2021 23:00"
+    },
+    { 
+      text: "Fift task",
+      description: "Mollit est ex mollit dolore sit sit deserunt incididunt eu minim deserunt laborum ipsum dolor.",
+      isCompleted: true,
+      currentDateFormated: "23-01-2021 23:00"
+    }
   ]);
 
   // Used in production if list should be empty at the beginning
@@ -152,14 +164,26 @@ function App() {
     setTodos(newTodos);
   };
 
+  const changeSortOrder = () => {
+    
+    todoListSortDirectionDescending = !todoListSortDirectionDescending;
+    console.log(todoListSortDirectionDescending);    
+    
+  }
+
   // Mapping over the todo items and display them by index
   return (
     <div className="app">      
       <h1>To Do List</h1>
       <em>React Hook Version</em>
       <h3>Create Task</h3>
-      <TodoForm addTodo={addTodo} />
-      <h3>Tasks</h3>
+      <TodoForm addTodo={addTodo} />      
+      <div className="taskListHeader">
+        <h3 className="taskListTitle">Tasks</h3>
+        <button className="iconButton" onClick={() => changeSortOrder()}>
+          <img className="sortIcon iconButton" alt="sort icons" src={todoListSortDirectionDescending ? "sort-ascending-icon.svg" : "sort-descending-icon.svg"}/>
+        </button>
+      </div>
       <div className="todoList">        
         {todos.map((todo, index) => (
           <Todo

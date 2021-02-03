@@ -2,6 +2,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+
+:root {
+  --app-width: 500px;
+}
+
 /* COMMON */
 .app {
   background: #293241;
@@ -11,7 +16,7 @@
   padding: 30px;   
 }
 
-h1 {
+h1, h3 {
   line-height: 10px;
   color: #FFF
 }
@@ -20,7 +25,8 @@ h1 {
 .createTaskForm {
   display: flex;
   flex-direction: column;
-  max-width: 500px;
+  max-width: var(--app-width);
+  margin-bottom: 50px;
 }
 
 .input {
@@ -36,7 +42,7 @@ h1 {
 
 .descriptionTextarea {
   display: flex;
-  max-width: 500px;  
+  max-width: var(--app-width);  
   height: 100px;
   font-family: 'Roboto', sans-serif;
 }
@@ -51,13 +57,34 @@ h1 {
   width: 70px;
 }
 
+/* Task List Header */
+.taskListHeader {
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;
+  max-width: var(--app-width);
+}
+
+.taskListTitle {
+  
+}
+
+.sortIcon {
+  position: relative;
+  right: 10px;
+  height: 25px;
+  filter: invert(90%) sepia(2%) saturate(1527%) hue-rotate(121deg) brightness(110%) contrast(97%);
+  cursor: pointer;
+}
+
 
 /* TODO ITEM */
 .todoList {  
+  position: relative;
   display: flex;  
   flex-direction: column; 
   border-radius: 4px;
-  max-width: 500px;    
+  max-width: var(--app-width);    
 }
 
 .todo {  
@@ -79,7 +106,7 @@ h1 {
 }
 
 .titleMetaContainer {
-  width: 500px;
+  max-width: var(--app-width);
   margin: 10px;
 }
 
@@ -88,8 +115,8 @@ h1 {
 }
 
 .navItems {
-  justify-content: space-between;  
   display: flex; 
+  justify-content: space-between;  
 }
 
 .todoTitle {
@@ -111,12 +138,16 @@ h1 {
 
 .iconButton {
   display: flex;
-  background-color: rgba(255, 0, 0, 0);
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+  background-color: rgba(255, 0, 0, 0);  
   border: 0;
   cursor: pointer;  
   opacity: 50%;
   width: 25px;
+  transition: 300ms;
+}
+
+.taskIconButton {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
 }
 
 .iconButton:focus {
@@ -125,16 +156,7 @@ h1 {
 }
 
 .iconButton:hover {
-  display: flex;
-  animation-name: backgroundColor;
-  animation-duration: 500ms;
-  animation-fill-mode: forwards;
-}
-
-@keyframes backgroundColor {
-  100% {    
-    opacity: 100%;        
-  }
+  opacity: 100%;
 }
 
 .todoMeta {  
